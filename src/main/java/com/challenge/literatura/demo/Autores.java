@@ -1,0 +1,76 @@
+package com.challenge.literatura.demo;
+import jakarta.persistence.*;
+
+import java.util.List;
+    @Entity
+    @Table(name = "autores")
+    public class Autores {
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private long id;
+        @Column(unique = true)
+        private String nombre;
+        private Integer fechaNacimiento;
+        private Integer fechaFallecimiento;
+        @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+        private List<Libros>libros;
+
+        public Autores(AutoresRecord autor){
+            this.nombre=autor.nombre();
+            this.fechaNacimiento= autor.fechaNacimiento();
+            this.fechaFallecimiento= autor.fechaFallecimiento();
+        }
+
+        public Autores(){};
+
+        public String getNombre() {
+            return nombre;
+        }
+
+        public void setNombre(String nombre) {
+            this.nombre = nombre;
+        }
+
+        public Integer getFechaNacimiento() {
+            return fechaNacimiento;
+        }
+
+        public void setFechaNacimiento(Integer fechaNacimiento) {
+            this.fechaNacimiento = fechaNacimiento;
+        }
+
+        public Integer getFechaFallecimiento() {
+            return fechaFallecimiento;
+        }
+
+        public void setFechaFallecimiento(Integer fechaFallecimiento) {
+            this.fechaFallecimiento = fechaFallecimiento;
+        }
+
+        public List<Libros> getLibros() {
+            return libros;
+        }
+
+        public void setLibros(List<Libros> libros) {
+            this.libros = libros;
+        }
+
+        @Override
+        public String toString() {
+            return "Autor{" +
+                    "nombre='" + nombre + '\'' +
+                    ", fechaNacimiento=" + fechaNacimiento +
+                    ", fechaFallecimiento=" + fechaFallecimiento +
+                    ", libros=" + libros +
+                    '}';
+        }
+
+        public void imprimirInformacion() {
+            System.out.println("*****Autor*****");
+            System.out.println("Nomber:" + nombre);
+            System.out.println("Fecha de nacimiento: "+fechaNacimiento);
+            System.out.println("Fecha de fallecimiento: "+fechaFallecimiento);
+            System.out.println("Libros: "+libros);
+            System.out.println("");
+        }
+    }
